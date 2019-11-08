@@ -17,8 +17,9 @@ int training_bf(bf::basic_bloom_filter& bf, std::ifstream& filter)
 
 inline std::string get_prefix(const std::string& obj)
 {
-  // FIXME
-  return obj;
+  int pos = obj.find("_", obj.find("_", obj.find("_") + 1) + 1) + 1;
+
+  return obj.substr(pos, obj.rfind("_") - pos + 1);
 }
 
 int filter_objs(bf::basic_bloom_filter& bf,
@@ -64,7 +65,7 @@ int main(int argc, char** argv)
   std::ofstream t2(t2_file.c_str());
   std::ofstream t3(t3_file.c_str());
 
-  bf::basic_bloom_filter bf(0.8, 100);
+  bf::basic_bloom_filter bf(0.00001, 3854271);
 
   // training bf with prefix file's content
   int ret = training_bf(bf, p);
